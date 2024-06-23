@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Epic Poring Race - Ragnarok Mobile: Eternal Love</title>
+  <link rel="stylesheet" href="/src/style.css">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+  <meta property="og:title" content="Epic Poring Race">
+  <meta property="og:description" content="A fun Poring race game for Ragnarok Mobile: Eternal Love players">
+  <meta property="og:image" content="https://poringrace.llego.dev/poring-race.png">
+  <meta property="og:url" content="https://poringrace.llego.dev/">
+  <meta property="og:type" content="website">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@markllego">
+  <meta name="twitter:creator" content="@markllego">
+  <meta name="twitter:title" content="Epic Poring Race">
+  <meta name="twitter:description" content="A fun Poring race game for Ragnarok Mobile: Eternal Love players">
+  <meta name="twitter:image" content="https://poringrace.llego.dev/poring-race.png">
+</head>
+
+<body class="bg-gradient-to-r from-pink-100 to-pink-200 min-h-screen p-4 flex flex-col">
+  <div class="max-w-6xl mx-auto w-full flex-grow flex flex-col">
+    <header>
+      <h1 class="text-4xl md:text-5xl font-bold text-center text-pink-700 mb-4">Epic Poring Race</h1>
+    </header>
+
+    <main>
+      <section class="bg-white rounded-lg shadow-lg p-4 mb-4">
+        <textarea id="namesInput" class="w-full p-2 border border-gray-300 rounded mb-2 h-20 resize-none"
+          placeholder="Enter player names separated by commas">xRhy, Anceaus, Seruel, Roa.Autumn, xMugwort, Ryleigh, Sayonarah, WBB.Panda, Serizawa, Rurouni, YUJIROH, Zed, Abomination, Alacrity, Churvie, Jyuuviole, Trex, Darthvad3r, SUGARCOOK13, LithiumIon, Zvyesdana, WBB.IceBear, Suzy, RAIN, IYOTTERRORIST, Jabee, St. Bombay, LARASHINE, BlackMingming, SweatyPalm, Krizteta, Qlementine, xLemon, JPWiz, EMBER, Scheneizel, Scheherazade, Joce16, Amity, eren, mnchaos, Gab, xLire, Zhashi, KentDan, Heatless, Freya, Ghost, Antheus, black.label, Xiaz, ArthmaelXVII, Teekaz, Trixie, GReed, MAXCIIM, RapidStrike, arbielog, MErton, xZyve, Cyrax, Brynhildr, ShaneAmber, Tatoy, Leitsac, WBB.GRizzly, Phoebe, closetoyou, Rolfe, John1989, Dale.Reki, caisquared, jini, Aurora, Real05, Kyasurin, DocMel, Reusamtel, Jashobeam, BoyBawang, AlleahRose, Dnex, Foundy, GravyMaster, Koleena, NOTTINGHILL, Dane-kun, JethzZ, dailydally, The25th, Horrhei, Athan28, NICE, Mondz, BossKeo, Oji, DrrN, 123Punch, Azh, Storm</textarea>
+        <div class="flex flex-wrap gap-2">
+          <button onclick="addPlayers()"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded transition duration-300 text-sm">Add
+            Players</button>
+          <button onclick="startRace()"
+            class="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-2 rounded transition duration-300 text-sm">Start
+            Race</button>
+          <button onclick="restartRace()"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-2 rounded transition duration-300 text-sm">Restart</button>
+          <button onclick="resetGame()"
+            class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded transition duration-300 text-sm">Reset</button>
+          <button onclick="showWinners()"
+            class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-1 px-2 rounded transition duration-300 text-sm">Show
+            Winners</button>
+        </div>
+      </section>
+
+      <section id="winnerDisplay"
+        class="bg-black bg-opacity-70 text-white text-4xl font-bold p-4 mb-4 rounded-lg hidden">
+      </section>
+
+      <section id="gameArea" class="bg-white rounded-lg shadow-lg p-2 race-container overflow-hidden relative">
+        <!-- SVG will be inserted here -->
+      </section>
+    </main>
+
+    <footer class="mt-8 text-center text-sm text-gray-600">
+      <p>&copy; 2024 Epic Poring Race. Crafted with ☕ and questionable life choices by
+        <a href="https://github.com/llegomark/poring-race" target="_blank" rel="noopener noreferrer"
+          class="text-blue-600 hover:underline">Mark Anthony Llego</a>.
+      </p>
+      <p class="mt-1">Powered by caffeine and the tears of defeated Porings. 🎮</p>
+    </footer>
+  </div>
+
+  <div id="notification"
+    class="fixed bottom-4 right-4 max-w-sm w-full bg-white border-l-4 border-blue-500 rounded-lg shadow-md hidden transform transition-all duration-300 ease-in-out">
+    <div class="p-4 flex items-center">
+      <div class="flex-shrink-0">
+        <svg class="h-5 w-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd"
+            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+            clip-rule="evenodd" />
+        </svg>
+      </div>
+      <div class="ml-3 w-0 flex-1">
+        <p id="notificationMessage" class="text-sm leading-5 font-medium text-gray-900"></p>
+      </div>
+      <div class="ml-4 flex-shrink-0 flex">
+        <button id="closeNotification"
+          class="inline-flex text-gray-400 focus:outline-none focus:text-gray-500 transition ease-in-out duration-150">
+          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+              clip-rule="evenodd" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <audio id="poringSound1">
+    <source src="/src/sounds/poi3.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="poringSound2">
+    <source src="/src/sounds/poi2.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="poringSound3">
+    <source src="/src/sounds/po1.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="poringSound4">
+    <source src="/src/sounds/poring_sequence.wav" type="audio/wav">
+  </audio>
+  <audio id="levelUpSound">
+    <source src="/src/sounds/levelup.wav" type="audio/wav">
+  </audio>
+  <audio id="healSound">
+    <source src="/src/sounds/Acolyte_Heal.wav" type="audio/wav">
+  </audio>
+  <audio id="aspersioSound">
+    <source src="/src/sounds/Priest_Aspersio.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="gloriaSound">
+    <source src="/src/sounds/Priest_Gloria.wav" type="audio/wav">
+  </audio>
+  <audio id="magnificatSound">
+    <source src="/src/sounds/Priest_MagnificatWithCast.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="suffragiumSound">
+    <source src="/src/sounds/Priest_Suffragium.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="blessingSound">
+    <source src="/src/sounds/Acolyte_Blessing.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="backgroundMusic" loop>
+    <source src="/src/sounds/BragisPoem.mp3" type="audio/mpeg">
+  </audio>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
